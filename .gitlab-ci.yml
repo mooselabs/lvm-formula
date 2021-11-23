@@ -102,7 +102,7 @@ rubocop:
 ###############################################################################
 # Define `test` template
 ###############################################################################
-.test_instance:
+.test_instance: &test_instance
   stage: *stage_test
   image: *image_dindruby
   services: *services_docker_dind
@@ -118,6 +118,13 @@ rubocop:
     - 'bin/kitchen verify "${DOCKER_ENV_CI_JOB_NAME}"'
 
 ###############################################################################
+# Define `test` template (`allow_failure: true`)
+###############################################################################
+.test_instance_failure_permitted:
+  <<: *test_instance
+  allow_failure: true
+
+###############################################################################
 # `test` stage: each instance below uses the `test` template above
 ###############################################################################
 ## Define the rest of the matrix based on Kitchen testing
@@ -128,6 +135,7 @@ rubocop:
 # loop4-loop5-debian-9-tiamat-py3: {extends: '.test_instance'}
 # loop4-loop5-ubuntu-2004-tiamat-py3: {extends: '.test_instance'}
 # loop4-loop5-ubuntu-1804-tiamat-py3: {extends: '.test_instance'}
+# loop4-loop5-centos-stream8-tiamat-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-centos-8-tiamat-py3: {extends: '.test_instance'}
 # loop4-loop5-centos-7-tiamat-py3: {extends: '.test_instance'}
 # loop4-loop5-amazonlinux-2-tiamat-py3: {extends: '.test_instance'}
@@ -145,6 +153,8 @@ rubocop:
 # loop5-loop6-ubuntu-2004-master-py3: {extends: '.test_instance'}
 # loop4-loop5-ubuntu-1804-master-py3: {extends: '.test_instance'}
 # loop5-loop6-ubuntu-1804-master-py3: {extends: '.test_instance'}
+# loop4-loop5-centos-stream8-master-py3: {extends: '.test_instance_failure_permitted'}
+# loop5-loop6-centos-stream8-master-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-centos-8-master-py3: {extends: '.test_instance'}
 # loop5-loop6-centos-8-master-py3: {extends: '.test_instance'}
 # loop4-loop5-centos-7-master-py3: {extends: '.test_instance'}
@@ -157,8 +167,8 @@ rubocop:
 # loop5-loop6-opensuse-leap-153-master-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-152-master-py3: {extends: '.test_instance'}
 # loop5-loop6-opensuse-leap-152-master-py3: {extends: '.test_instance'}
-# loop4-loop5-opensuse-tmbl-latest-master-py3: {extends: '.test_instance'}
-# loop5-loop6-opensuse-tmbl-latest-master-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-tmbl-latest-master-py3: {extends: '.test_instance_failure_permitted'}
+# loop5-loop6-opensuse-tmbl-latest-master-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-amazonlinux-2-master-py3: {extends: '.test_instance'}
 # loop5-loop6-amazonlinux-2-master-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-8-master-py3: {extends: '.test_instance'}
@@ -175,18 +185,40 @@ rubocop:
 # loop5-loop6-almalinux-8-master-py3: {extends: '.test_instance'}
 # loop4-loop5-rockylinux-8-master-py3: {extends: '.test_instance'}
 # loop5-loop6-rockylinux-8-master-py3: {extends: '.test_instance'}
+# loop4-loop5-debian-11-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-debian-10-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-debian-9-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-ubuntu-2004-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-ubuntu-1804-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-centos-stream8-3004-0-py3: {extends: '.test_instance_failure_permitted'}
+# loop4-loop5-centos-8-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-centos-7-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-fedora-34-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-fedora-33-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-leap-153-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-leap-152-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-tmbl-latest-3004-0-py3: {extends: '.test_instance_failure_permitted'}
+# loop4-loop5-amazonlinux-2-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-oraclelinux-8-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-oraclelinux-7-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-arch-base-latest-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-gentoo-stage3-latest-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-gentoo-stage3-systemd-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-almalinux-8-3004-0-py3: {extends: '.test_instance'}
+# loop4-loop5-rockylinux-8-3004-0-py3: {extends: '.test_instance'}
 # loop4-loop5-debian-11-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-debian-10-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-debian-9-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-ubuntu-2004-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-ubuntu-1804-3003-3-py3: {extends: '.test_instance'}
+# loop4-loop5-centos-stream8-3003-3-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-centos-8-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-centos-7-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-fedora-34-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-fedora-33-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-153-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-152-3003-3-py3: {extends: '.test_instance'}
-# loop4-loop5-opensuse-tmbl-latest-3003-3-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-tmbl-latest-3003-3-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-amazonlinux-2-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-8-3003-3-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-7-3003-3-py3: {extends: '.test_instance'}
@@ -205,7 +237,7 @@ rubocop:
 # loop4-loop5-fedora-33-3002-7-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-153-3002-7-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-152-3002-7-py3: {extends: '.test_instance'}
-# loop4-loop5-opensuse-tmbl-latest-3002-7-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-tmbl-latest-3002-7-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-amazonlinux-2-3002-7-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-8-3002-7-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-7-3002-7-py3: {extends: '.test_instance'}
@@ -222,7 +254,7 @@ rubocop:
 # loop4-loop5-fedora-33-3001-8-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-153-3001-8-py3: {extends: '.test_instance'}
 # loop4-loop5-opensuse-leap-152-3001-8-py3: {extends: '.test_instance'}
-# loop4-loop5-opensuse-tmbl-latest-3001-8-py3: {extends: '.test_instance'}
+# loop4-loop5-opensuse-tmbl-latest-3001-8-py3: {extends: '.test_instance_failure_permitted'}
 # loop4-loop5-amazonlinux-2-3001-8-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-8-3001-8-py3: {extends: '.test_instance'}
 # loop4-loop5-oraclelinux-7-3001-8-py3: {extends: '.test_instance'}
