@@ -51,6 +51,6 @@ lvm_lv_create_{{ lv }}:
 lvm_lv_create_nothing_to_do:
   test.show_notification:
     - text: |
-        No "lv.create" pillar data supplied - nothing to do!
+        No "lv.create" pillar data supplied {{ lvm }} - nothing to do!
 
 {%- endif %}
