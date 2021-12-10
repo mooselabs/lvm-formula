@@ -34,14 +34,7 @@
     )
 %}
 
-{%- set config = salt['grains.filter_by'](
-      {'defaults': defaults},
-      default='defaults',
-      merge=_config
-    )
-%}
-
-{%- set lvm = config %}
+{%- set lvm = salt['pillar.get']('lvm', default=defaults, merge=True) %}
 
 {#- Post-processing for specific non-YAML customisations #}
 {%- if grains.os == 'MacOS' %}
